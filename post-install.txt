@@ -1,0 +1,14 @@
+chroot /rootfs /usr/bin/apt-get install -y vim raspi-config git gcc g++ automake make cmake unzip locate rpi-update
+chroot /rootfs rpi-update
+
+mkdir -p /rootfs/etc/systemd/system/getty@tty1.service.d
+echo "[Service]" > /rootfs/etc/systemd/system/getty@tty1.service.d/autologin.conf
+echo "ExecStart=" >> /rootfs/etc/systemd/system/getty@tty1.service.d/autologin.conf
+echo "ExecStart=-/sbin/agetty --autologin root --noclear %I 38400 linux" >> /rootfs/etc/systemd/system/getty@tty1.service.d/autologin.conf
+
+chroot /rootfs systemctl enable getty@tty1.service
+
+echo "if [ \$(tty) == /dev/tty1 ]; then" > /rootfs/root/.bashrc
+ echo "/boot/scripts/install_default" >> /rootfs/root/.bashrc
+echo "fi" >> /rootfs/root/.bashrc
+
