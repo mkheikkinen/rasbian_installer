@@ -1,0 +1,54 @@
+apt-get install -y libfreetype6-dev  libmosquitto-dev lua5.2 lua5.2-dev sudo libssl-dev m4
+
+# build luarocks
+wget http://luarocks.org/releases/luarocks-2.3.0.tar.gz
+tar zxpf luarocks-2.3.0.tar.gz
+cd luarocks-2.3.0
+./configure; sudo make bootstrap
+luarocks install cqueues
+luarocks install struct
+luarocks install luaposix
+luarocks install luasocket
+luarocks install penlight
+luarocks install lunix
+
+
+# get rame stuff
+mkdir /root/rame
+cd /root/rame
+
+git clone https://github.com/jlauha/raspberrypi-hats.git
+cd /root/rameplayerorg/raspberrypi-hats/eepromutils
+make
+
+cd /root/rame
+git clone https://github.com/rameplayerorg/rameplayer-utils.git
+cd /root/rame/rameplayer-utils
+#Rasbian patch
+cp /boot/mods/CMakeLists.txt .
+mkdir build
+cd build
+cmake ..
+
+mkdir /usr/include/freetype
+cp /usr/include/freetype2/* /usr/include/freetype
+make
+
+cd /root/rame
+git clone https://github.com/rameplayerorg/rameplayer-backend.git
+
+cd /root/rame
+git clone https://github.com/rameplayerorg/rameplayer-alpine.git
+
+cd /root/rame
+git clone https://github.com/rameplayerorg/rameplayer-webui.git
+
+cd /root/rame
+git clone https://github.com/rameplayerorg/lua-cqueues-pushy.git
+cd lua-cqueues-pushy
+sed -i '1s/^/#define TIOCM_OUT1      0x2000 \n/' cqp/protocol/modem.c
+sed -i '1s/^/#define TIOCM_OUT2      0x4000 \n/' cqp/protocol/modem.c
+sed -i '1s/^/#define TIOCM_LOOP      0x8000 \n/' cqp/protocol/modem.c
+
+
+touch /root/stage1.ok

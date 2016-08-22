@@ -1,0 +1,14 @@
+#http://www.rs-online.com/designspark/electronics/blog/building-a-raspberry-pi-2-webrtc-camera
+
+apt-get install -y libmicrohttpd-dev libjansson-dev libnice-dev libssl-dev libsrtp-dev libsofia-sip-ua-dev libglib2.0-dev libopus-dev libogg-dev libini-config-dev libcollection-dev pkg-config gengetopt	
+
+git clone https://github.com/meetecho/janus-gateway.git
+cd janus-gateway
+sh autogen.sh
+./configure --disable-websockets --disable-data-channels --disable-rabbitmq --disable-docs --prefix=/opt/janus
+make
+make install
+make configs
+
+
+apt-get install -y gstreamer1.0 nginx

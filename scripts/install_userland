@@ -9,32 +9,3 @@ mkdir build
 sudo cmake -DCMAKE_BUILD_TYPE=Debug ..
 sudo make
 sudo make install
-
-
-
-
-apt-get install libfreetype6-dev  libmosquitto-dev lua5.2 lua5.2-dev sudo libssl-dev m4
-
-
-# build luarocks
-wget http://luarocks.org/releases/luarocks-2.3.0.tar.gz
-tar zxpf luarocks-2.3.0.tar.gz
-cd luarocks-2.3.0
-./configure; sudo make bootstrap
-luarocks install cqueues
-luarocks install struct
-luarocks install luaposix
-
-
-# get ramaplayer stuff
-cd /root/
-mkdir rameplayerorg
-cd rameplayerorg
-
-git clone https://github.com/rameplayerorg/rameplayer-utils.git
-git clone https://github.com/rameplayerorg/rameplayer-backend.git
-git clone https://github.com/rameplayerorg/rameplayer-alpine.git
-git clone https://github.com/rameplayerorg/rameplayer-webui.git
-git clone https://github.com/rameplayerorg/lua-cqueues-pushy.git
-
-touch /root/stage1.ok

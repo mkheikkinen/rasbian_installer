@@ -1,0 +1,6 @@
+#/boot/scripts/install_rame
+
+cd /root/
+git clone https://github.com/mkheikkinen/rasbian_installer.git
+
+updatedb
